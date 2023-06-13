@@ -1,12 +1,12 @@
 //
-//  Text.hpp
+//  Text.h
 //  cpp-synthesizing-natural-textures
 //
 //  Created by fabricio varisco oliveira on 12/06/23.
 //
 
-#ifndef Text_hpp
-#define Text_hpp
+#ifndef TEXT_H
+#define TEXT_H
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_ttf.h>
 #include <string>
@@ -40,4 +40,4 @@ private:
 };
 
 
-#endif /* Text_hpp */
+#endif /* TEXT_H */
