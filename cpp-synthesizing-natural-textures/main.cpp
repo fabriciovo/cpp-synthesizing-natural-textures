@@ -56,6 +56,8 @@ void createPPMFile() {
 
 
 int main(int argc, char* argv[]) {
+    static const int HEIGHT = 800;
+    static const int WIDTH = 600;
     if (SDL_Init(SDL_INIT_VIDEO) < 0) {
         SDL_LogError(SDL_LOG_CATEGORY_APPLICATION, "Falha ao inicializar o SDL: %s", SDL_GetError());
         return 1;
@@ -68,7 +70,7 @@ int main(int argc, char* argv[]) {
     }
 
 
-    SDL_Window* window = SDL_CreateWindow("Exemplo de Janela", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, 800, 600, SDL_WINDOW_SHOWN);
+    SDL_Window* window = SDL_CreateWindow("Exemplo de Janela", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, HEIGHT, WIDTH, SDL_WINDOW_SHOWN);
     SDL_Renderer* renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
     TTF_Font* font = TTF_OpenFont("/Users/fabriciovo/Developer/GitHub/cpp-synthesizing-natural-textures/cpp-synthesizing-natural-textures/arial.ttf", 24);
 
@@ -79,25 +81,7 @@ int main(int argc, char* argv[]) {
         return 1;
     }
 
-
-    SDL_Color textColor = { 255, 255, 255, 255 };
-
-
-    SDL_Surface* textSurface = TTF_RenderText_Solid(font, "Sintese de Textura", textColor);
-    if (!textSurface) {
-        SDL_LogError(SDL_LOG_CATEGORY_APPLICATION, "Falha ao criar a superfície de texto: %s", TTF_GetError());
-        TTF_CloseFont(font);
-        SDL_DestroyRenderer(renderer);
-        SDL_DestroyWindow(window);
-        TTF_Quit();
-        SDL_Quit();
-        return 1;
-    }
-
-
-    SDL_FreeSurface(textSurface);
-    
-    Text text(renderer, font, "Sintese de Textura", textColor, (600 - textSurface->w) / 2, 20);
+    Text text(renderer, font, "Sintese de Textura", { 255, 255, 255, 255 }, WIDTH / 2, 20);
 
     bool quit = false;
     SDL_Event event;
