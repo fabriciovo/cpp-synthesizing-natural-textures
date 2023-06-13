@@ -12,6 +12,7 @@
 #include <SDL2/SDL_image.h>
 #include <SDL2/SDL_ttf.h>
 #include "Text.h"
+#include "Image.h"
 
 void createPPMFile() {
         int width = 0;
@@ -70,7 +71,7 @@ int main(int argc, char* argv[]) {
     }
 
 
-    SDL_Window* window = SDL_CreateWindow("Exemplo de Janela", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, HEIGHT, WIDTH, SDL_WINDOW_SHOWN);
+    SDL_Window* window = SDL_CreateWindow("Sintese de Textura", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, HEIGHT, WIDTH, SDL_WINDOW_SHOWN);
     SDL_Renderer* renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
     TTF_Font* font = TTF_OpenFont("/Users/fabriciovo/Developer/GitHub/cpp-synthesizing-natural-textures/cpp-synthesizing-natural-textures/arial.ttf", 24);
 
@@ -81,8 +82,17 @@ int main(int argc, char* argv[]) {
         return 1;
     }
 
+    //Title
     Text text(renderer, font, "Sintese de Textura", { 255, 255, 255, 255 }, WIDTH / 2, 20);
-
+    
+    //Image Titles
+    Text textImagem(renderer, font, "Imagem", { 255, 255, 255, 255 }, 90, HEIGHT / 2 - 30);
+    Text textTextura(renderer, font, "Textura", { 255, 255, 255, 255 }, WIDTH / 2, HEIGHT / 2 - 30);
+    Text textResult(renderer, font, "Resultado", { 255, 255, 255, 255 }, 510, HEIGHT / 2 - 30);
+    
+    //Images
+    Image image(renderer, "/Users/fabriciovo/Developer/GitHub/cpp-synthesizing-natural-textures/cpp-synthesizing-natural-textures/t.png", 200, 150);
+    
     bool quit = false;
     SDL_Event event;
     while (!quit) {
@@ -95,8 +105,13 @@ int main(int argc, char* argv[]) {
         SDL_RenderClear(renderer);
 
         text.render();
-
-
+        textImagem.render();
+        textTextura.render();
+        textResult.render();
+        
+        image.render(90, HEIGHT / 2);
+        image.render(WIDTH / 2, HEIGHT / 2);
+        image.render(510, HEIGHT / 2);
         SDL_RenderPresent(renderer);
     }
 

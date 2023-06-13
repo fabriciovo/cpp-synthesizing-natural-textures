@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		AB8FB5772A35159600439422 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = AB8FB5762A35159600439422 /* main.cpp */; };
 		ABB112D92A37EE180038DEEC /* Text.cpp in Sources */ = {isa = PBXBuildFile; fileRef = ABB112D72A37EE180038DEEC /* Text.cpp */; };
+		ABB112DC2A37F7810038DEEC /* Image.cpp in Sources */ = {isa = PBXBuildFile; fileRef = ABB112DA2A37F7810038DEEC /* Image.cpp */; };
 		ABD8D3822A37D1EB00B22BDF /* libSDL2_ttf-2.0.0.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = ABD8D3812A37D1EB00B22BDF /* libSDL2_ttf-2.0.0.dylib */; };
 		ABD8D3832A37D1EB00B22BDF /* libSDL2_ttf-2.0.0.dylib in Embed Libraries */ = {isa = PBXBuildFile; fileRef = ABD8D3812A37D1EB00B22BDF /* libSDL2_ttf-2.0.0.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		ABDAA41A2A3416FB007EBBA0 /* libSDL2-2.0.0.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = ABDAA4192A3416FB007EBBA0 /* libSDL2-2.0.0.dylib */; };
@@ -43,6 +44,8 @@
 		AB8FB5762A35159600439422 /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
 		ABB112D72A37EE180038DEEC /* Text.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Text.cpp; sourceTree = "<group>"; };
 		ABB112D82A37EE180038DEEC /* Text.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Text.h; sourceTree = "<group>"; };
+		ABB112DA2A37F7810038DEEC /* Image.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Image.cpp; sourceTree = "<group>"; };
+		ABB112DB2A37F7810038DEEC /* Image.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Image.h; sourceTree = "<group>"; };
 		ABD8D3812A37D1EB00B22BDF /* libSDL2_ttf-2.0.0.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libSDL2_ttf-2.0.0.dylib"; path = "../../../../../opt/homebrew/Cellar/sdl2_ttf/2.20.2/lib/libSDL2_ttf-2.0.0.dylib"; sourceTree = "<group>"; };
 		ABD8D3852A37D67D00B22BDF /* arial.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = arial.ttf; sourceTree = "<group>"; };
 		ABDAA4192A3416FB007EBBA0 /* libSDL2-2.0.0.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libSDL2-2.0.0.dylib"; path = "../../../../../opt/homebrew/Cellar/sdl2/2.26.5/lib/libSDL2-2.0.0.dylib"; sourceTree = "<group>"; };
@@ -68,6 +71,8 @@
 		AB6E027A2A33A2CD00747E8A = {
 			isa = PBXGroup;
 			children = (
+				ABB112DA2A37F7810038DEEC /* Image.cpp */,
+				ABB112DB2A37F7810038DEEC /* Image.h */,
 				ABB112D72A37EE180038DEEC /* Text.cpp */,
 				ABB112D82A37EE180038DEEC /* Text.h */,
 				AB6E02852A33A2CD00747E8A /* cpp-synthesizing-natural-textures */,
@@ -163,6 +168,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				ABB112DC2A37F7810038DEEC /* Image.cpp in Sources */,
 				ABB112D92A37EE180038DEEC /* Text.cpp in Sources */,
 				AB8FB5772A35159600439422 /* main.cpp in Sources */,
 			);
