@@ -8,51 +8,12 @@
 #include <iostream>
 #include <fstream>
 #include <string>
+#include <cstdint>
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
 #include <SDL2/SDL_ttf.h>
 #include "Text.h"
 #include "Image.h"
-
-void createPPMFile() {
-        int width = 0;
-        int height = 0;
-        std::string fileName = "";
-        
-        std::cout << "Creating File..." << std::endl;
-            
-        std::cout << "File Name: ";
-        std::cin >> fileName;
-        
-        std::cout << "Enter the Width: ";
-        std::cin >> width;
-        
-        std::cout << "Enter the Height: ";
-            std::cin >> height;
-        
-        
-        std::ofstream fout(fileName+".ppm");
-        if(fout.fail()) {
-            std::cout << "Failed to create PPM file." << std::endl;
-            return;
-        }
-        
-        
-        //Create Header
-        fout << "P6\n";
-        fout << width << " " << height << "\n";
-        fout << "255\n";
-
-        for(int y = 0; y < height; y++){
-            for(int x = 0; x < width; x++){
-                fout << u_int8_t(rand()%256);
-                fout << u_int8_t(rand()%256);
-                fout << u_int8_t(rand()%256);
-            }
-        }
-        
-        fout.close();
-    }
 
 
 
