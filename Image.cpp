@@ -18,7 +18,7 @@ Image::Image(SDL_Renderer* renderer, const std::string& imagePath, int width, in
             return;
         }
 
-        SDL_FreeSurface(imageSurface);
+        
     }
 
 Image::Image(SDL_Renderer* renderer, SDL_Surface* surface, int width, int height)
@@ -27,9 +27,6 @@ Image::Image(SDL_Renderer* renderer, SDL_Surface* surface, int width, int height
         // Crie a textura a partir da superfície usando o renderer fornecido
         texture = SDL_CreateTextureFromSurface(renderer, surface);
         // Verifique se a criação da textura foi bem-sucedida
-
-        // Libere a memória alocada para a superfície
-        SDL_FreeSurface(surface);
     }
 
 Image::~Image() {
