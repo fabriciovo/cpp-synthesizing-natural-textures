@@ -1,4 +1,5 @@
 #xcode specific
+build
 build/*
 *.pbxuser
 *.mode2v3
