@@ -1,3 +1,6 @@
+#ifndef IMAGE_H
+#define IMAGE_H
+
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
 #include <string>
@@ -20,3 +23,5 @@ private:
     
     int width, height;
 };
+#endif /* IMAGE_H */
+
