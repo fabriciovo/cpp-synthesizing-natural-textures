@@ -11,76 +11,149 @@
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
 #include <SDL2/SDL_ttf.h>
+#include <vector>
+#include <math.h>
 #include "Text.h"
 #include "Image.h"
+
+struct Position {
+  int x, y;
+};
+ 
+struct ValidPositions {
+  struct Position candidates[3];
+};
+
+ValidPositions escolhe_vizinho(){
+    
+    
+   // return ;
+    
+};
+
+
+float isSimilarColor(SDL_Color color1, SDL_Color color2) {
+    int redDiff = std::powf(color1.r - color2.r, 2);
+    int greenDiff = std::powf(color1.g - color2.g,2);
+    int blueDiff = std::powf(color1.b - color2.b,2);
+    return redDiff + greenDiff + blueDiff;
+}
+
+Uint32 SDL_GetPixel(SDL_Surface* surface, int x, int y) {
+    int bpp = surface->format->BytesPerPixel;
+    Uint8* p = static_cast<Uint8*>(surface->pixels) + y * surface->pitch + x * bpp;
+    switch (bpp) {
+        case 1:
+            return *p;
+        case 2:
+            return *reinterpret_cast<Uint16*>(p);
+        case 3:
+            if (SDL_BYTEORDER == SDL_BIG_ENDIAN)
+                return p[0] << 16 | p[1] << 8 | p[2];
+            else
+                return p[0] | p[1] << 8 | p[2] << 16;
+        case 4:
+            return *reinterpret_cast<Uint32*>(p);
+        default:
+            return 0;
+    }
+}
+
+void SDL_SetPixel(SDL_Surface* surface, int x, int y, Uint32 pixel) {
+    int bpp = surface->format->BytesPerPixel;
+    Uint8* p = static_cast<Uint8*>(surface->pixels) + y * surface->pitch + x * bpp;
+    switch (bpp) {
+        case 1:
+            *p = pixel;
+            break;
+        case 2:
+            *reinterpret_cast<Uint16*>(p) = pixel;
+            break;
+        case 3:
+            if (SDL_BYTEORDER == SDL_BIG_ENDIAN) {
+                p[0] = (pixel >> 16) & 0xff;
+                p[1] = (pixel >> 8) & 0xff;
+                p[2] = pixel & 0xff;
+            } else {
+                p[0] = pixel & 0xff;
+                p[1] = (pixel >> 8) & 0xff;
+                p[2] = (pixel >> 16) & 0xff;
+            }
+            break;
+        case 4:
+            *reinterpret_cast<Uint32*>(p) = pixel;
+            break;
+    }
+}
+
 
 
 Image* synthesizeTextures(SDL_Surface* sampleImage, SDL_Surface* preSynthesisImage, SDL_Renderer* renderer, int blockSize = 8, int iterations = 10)
 {
-    // Converter as superfícies para o formato RGBA
-    SDL_Surface* sampleRGBA = SDL_ConvertSurfaceFormat(sampleImage, SDL_PIXELFORMAT_RGBA8888, 0);
-    SDL_Surface* preSynthesisRGBA = SDL_ConvertSurfaceFormat(preSynthesisImage, SDL_PIXELFORMAT_RGBA8888, 0);
 
-    // Obter as dimensões das imagens
-    int sampleWidth = sampleRGBA->w;
-    int sampleHeight = sampleRGBA->h;
-    int preSynthesisWidth = preSynthesisRGBA->w;
-    int preSynthesisHeight = preSynthesisRGBA->h;
 
-    // Criar uma superfície para a imagem de resultado
-    SDL_Surface* resultSurface = SDL_CreateRGBSurfaceWithFormat(0, sampleWidth, sampleHeight, 32, SDL_PIXELFORMAT_RGBA8888);
+    SDL_Surface* sampleImageSurface = SDL_CreateRGBSurface(0, sampleImage->w, sampleImage->h,
+                                                    sampleImage->format->BitsPerPixel,
+                                                    sampleImage->format->Rmask,
+                                                    sampleImage->format->Gmask,
+                                                    sampleImage->format->Bmask,
+                                                    sampleImage->format->Amask);
+    
+    
+    SDL_Surface * preSynthesisImageSurface = SDL_CreateRGBSurface(0, preSynthesisImage->w, preSynthesisImage->h,
+                                                      preSynthesisImage->format->BitsPerPixel,
+                                                      preSynthesisImage->format->Rmask,
+                                                      preSynthesisImage->format->Gmask,
+                                                      preSynthesisImage->format->Bmask,
+                                                      preSynthesisImage->format->Amask);
 
-    // Dividir as imagens em blocos
-    int numBlocksX = sampleWidth / blockSize;
-    int numBlocksY = sampleHeight / blockSize;
 
-    for (int i = 0; i < numBlocksX; i++) {
-        for (int j = 0; j < numBlocksY; j++) {
-            int sampleX = i * blockSize;
-            int sampleY = j * blockSize;
-            int preSynthesisX = i * blockSize % preSynthesisWidth;
-            int preSynthesisY = j * blockSize % preSynthesisHeight;
 
-            SDL_Rect sampleRect = { sampleX, sampleY, blockSize, blockSize };
-            SDL_Surface* sampleBlock = SDL_CreateRGBSurfaceWithFormat(0, blockSize, blockSize, 32, SDL_PIXELFORMAT_RGBA8888);
-            SDL_BlitSurface(sampleRGBA, &sampleRect, sampleBlock, NULL);
 
-            SDL_Rect preSynthesisRect = { preSynthesisX, preSynthesisY, blockSize, blockSize };
-            SDL_Surface* preSynthesisBlock = SDL_CreateRGBSurfaceWithFormat(0, blockSize, blockSize, 32, SDL_PIXELFORMAT_RGBA8888);
-            SDL_BlitSurface(preSynthesisRGBA, &preSynthesisRect, preSynthesisBlock, NULL);
-
-            Uint32* samplePixels = static_cast<Uint32*>(sampleBlock->pixels);
-            Uint32* preSynthesisPixels = static_cast<Uint32*>(preSynthesisBlock->pixels);
-            Uint32* resultPixels = static_cast<Uint32*>(resultSurface->pixels);
-
-            for (int k = 0; k < blockSize * blockSize; k++) {
-                Uint8 sampleR, sampleG, sampleB, sampleA;
-                SDL_GetRGBA(samplePixels[k], sampleBlock->format, &sampleR, &sampleG, &sampleB, &sampleA);
-
-                Uint8 preSynthesisR, preSynthesisG, preSynthesisB, preSynthesisA;
-                SDL_GetRGBA(preSynthesisPixels[k], preSynthesisBlock->format, &preSynthesisR, &preSynthesisG, &preSynthesisB, &preSynthesisA);
-
-                Uint8 resultR = preSynthesisR + (sampleR - preSynthesisR) * iterations / (iterations + 1);
-                Uint8 resultG = preSynthesisG + (sampleG - preSynthesisG) * iterations / (iterations + 1);
-                Uint8 resultB = preSynthesisB + (sampleB - preSynthesisB) * iterations / (iterations + 1);
-                Uint8 resultA = preSynthesisA + (sampleA - preSynthesisA) * iterations / (iterations + 1);
-
-                resultPixels[sampleY * resultSurface->w + sampleX + k % blockSize + k / blockSize * resultSurface->w] = SDL_MapRGBA(resultSurface->format, resultR, resultG, resultB, resultA);
-            }
-
-            SDL_FreeSurface(sampleBlock);
-            SDL_FreeSurface(preSynthesisBlock);
-        }
-    }
-
-    SDL_FreeSurface(sampleRGBA);
-    SDL_FreeSurface(preSynthesisRGBA);
-
-    Image* resultImage = new Image(renderer, resultSurface, sampleWidth, sampleHeight);
-
-    SDL_FreeSurface(resultSurface);
-
-    return resultImage;
+    std::vector<ValidPositions> candidates;
+    for (int i = 0; i < sampleImage->h; i++){}
+      for (int j = 0; j < sampleImage->w; j++)
+          candidates.push_back(escolhe_vizinho());
+    
+    
+//    for (int y = 0; y < sampleImage->h; y++) {
+//        for (int x = 0; x < sampleImage->w; x++) {
+//
+//        }
+//    }
+//
+//
+//
+//    for (int y = 0; y < sampleImage->h; y++) {
+//        for (int x = 0; x < sampleImage->w; x++) {
+//            Uint32 foregroundPixel = SDL_GetPixel(preSynthesisImageSurface, x, y);
+//
+//            SDL_Color foregroundColor;
+//            SDL_GetRGB(foregroundPixel, preSynthesisImageSurface->format, &foregroundColor.r, &foregroundColor.g, &foregroundColor.b);
+//
+//            SDL_Color sampleColor;
+//            SDL_GetRGB(foregroundPixel, preSynthesisImageSurface->format, &foregroundColor.r, &foregroundColor.g, &foregroundColor.b);
+//
+//            float value = isSimilarColor(foregroundColor, foregroundColor);
+//
+//
+//
+            
+            
+//
+//            if () {
+//                Uint32 backgroundPixel = SDL_GetPixel(preSynthesisImageSurface, x, y);
+//                SDL_SetPixel(sampleImage, x, y, backgroundPixel);
+//            } else {
+//                SDL_SetPixel(sampleImage, x, y, foregroundPixel);
+//            }
+//        }
+//    }
+    
+    
+    Image * newImage = new Image(renderer, sampleImage, 200, 150);
+    return newImage;
+    
 }
 
 int main(int argc, char* argv[]) {
