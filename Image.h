@@ -1,46 +1,26 @@
 #ifndef IMAGE_H
 #define IMAGE_H
 
-#include <SDL.h>
-#include <SDL_image.h>
 #include <cmath>
 #include <string>
 #include <vector>
 
 class Image {
 public:
-    Image(SDL_Renderer* renderer, const std::string& imagePath, int width, int height);
-    Image(SDL_Renderer* renderer, SDL_Surface* surface, int width, int height);
-    ~Image();
-    void render(int x, int y);
-    void setSurface(SDL_Surface* surface);
-    void resetSurface();
-    void setPixel(SDL_Surface* surface, int x, int y, Uint32 pixel);
-    void updateTexture();
-    void applyBlurFilter();
-    void applyEmbossFilter();
-    void applySharpenFilter();
+	Image();
+	Image(int h, int w);
+	int getHeight();
+	int getWidth();
+	void setPixelP(int rgb, int x, int y);
+	void setPixel(int r, int g, int b, int x, int y);
+	int getPixel(int x, int y);
+	int* getPixels();
+	void setPixels(int* p_pixel);
+	int getPixelEffect(int a);
+	void setPixelEffect(int a, int rgb);
 
-    SDL_Surface* getSurface() const;
-    SDL_Surface* getOriginalSurface() const;
-    SDL_Texture* getTexture() const;
-    SDL_Renderer* getRenderer();
-    SDL_Color getPixelColor(int x, int y) const;
-
-    int getWidth();
-    int getHeight();
-
-    Uint32 getPixel(SDL_Surface* surface, int x, int y);
-
-    void saveImage(const std::string& outputPath) const;
-    void setPixelColor(int x, int y, const SDL_Color& color);
 private:
-    SDL_Renderer* renderer;
-    SDL_Texture* texture;
-    SDL_Surface* surface;
-    SDL_Surface* originalSurface;
-
-
+	int* pixels;
     int width, height;
 };
 #endif /* IMAGE_H */
