@@ -1,233 +1,134 @@
-//
-//  main.cpp
-//  cpp-synthesizing-natural-textures
-//
-//  Created by fabricio varisco oliveira on 10/06/23.
-//
-
+#include <math.h>
 #include <iostream>
 #include <fstream>
-#include <string>
-#include <SDL2/SDL.h>
-#include <SDL2/SDL_image.h>
-#include <SDL2/SDL_ttf.h>
-#include <vector>
-#include <math.h>
-#include "Text.h"
+
 #include "Image.h"
 
-struct Position {
-  int x, y;
-};
- 
-struct ValidPositions {
-  struct Position candidates[3];
-};
-
-ValidPositions escolhe_vizinho(){
-    
-    
-   // return ;
-    
-};
-
-
-float isSimilarColor(SDL_Color color1, SDL_Color color2) {
-    int redDiff = std::powf(color1.r - color2.r, 2);
-    int greenDiff = std::powf(color1.g - color2.g,2);
-    int blueDiff = std::powf(color1.b - color2.b,2);
-    return redDiff + greenDiff + blueDiff;
+int min(int a, int b) {
+    return b < a ? b : a;
 }
 
-Uint32 SDL_GetPixel(SDL_Surface* surface, int x, int y) {
-    int bpp = surface->format->BytesPerPixel;
-    Uint8* p = static_cast<Uint8*>(surface->pixels) + y * surface->pitch + x * bpp;
-    switch (bpp) {
-        case 1:
-            return *p;
-        case 2:
-            return *reinterpret_cast<Uint16*>(p);
-        case 3:
-            if (SDL_BYTEORDER == SDL_BIG_ENDIAN)
-                return p[0] << 16 | p[1] << 8 | p[2];
-            else
-                return p[0] | p[1] << 8 | p[2] << 16;
-        case 4:
-            return *reinterpret_cast<Uint32*>(p);
-        default:
-            return 0;
-    }
+int max(int a, int b) {
+    return b > a ? b : a;
 }
 
-void SDL_SetPixel(SDL_Surface* surface, int x, int y, Uint32 pixel) {
-    int bpp = surface->format->BytesPerPixel;
-    Uint8* p = static_cast<Uint8*>(surface->pixels) + y * surface->pitch + x * bpp;
-    switch (bpp) {
-        case 1:
-            *p = pixel;
-            break;
-        case 2:
-            *reinterpret_cast<Uint16*>(p) = pixel;
-            break;
-        case 3:
-            if (SDL_BYTEORDER == SDL_BIG_ENDIAN) {
-                p[0] = (pixel >> 16) & 0xff;
-                p[1] = (pixel >> 8) & 0xff;
-                p[2] = pixel & 0xff;
-            } else {
-                p[0] = pixel & 0xff;
-                p[1] = (pixel >> 8) & 0xff;
-                p[2] = (pixel >> 16) & 0xff;
-            }
-            break;
-        case 4:
-            *reinterpret_cast<Uint32*>(p) = pixel;
-            break;
-    }
-}
+Image * readImage(std::string imgName) {
+    std::ifstream arqE;
+    arqE.open(imgName + ".ppm");
+    char buffer[50];
+    int r, g, b;
+    int width = 255, height = 255;
+    int transp;
 
+    arqE.getline(buffer, 50);
+    arqE >> width;
+    arqE >> height;
 
-
-Image* synthesizeTextures(SDL_Surface* sampleImage, SDL_Surface* preSynthesisImage, SDL_Renderer* renderer, int blockSize = 8, int iterations = 10)
-{
-
-
-    SDL_Surface* sampleImageSurface = SDL_CreateRGBSurface(0, sampleImage->w, sampleImage->h,
-                                                    sampleImage->format->BitsPerPixel,
-                                                    sampleImage->format->Rmask,
-                                                    sampleImage->format->Gmask,
-                                                    sampleImage->format->Bmask,
-                                                    sampleImage->format->Amask);
-    
-    
-    SDL_Surface * preSynthesisImageSurface = SDL_CreateRGBSurface(0, preSynthesisImage->w, preSynthesisImage->h,
-                                                      preSynthesisImage->format->BitsPerPixel,
-                                                      preSynthesisImage->format->Rmask,
-                                                      preSynthesisImage->format->Gmask,
-                                                      preSynthesisImage->format->Bmask,
-                                                      preSynthesisImage->format->Amask);
-
-
-
-
-    std::vector<ValidPositions> candidates;
-    for (int i = 0; i < sampleImage->h; i++){}
-      for (int j = 0; j < sampleImage->w; j++)
-          candidates.push_back(escolhe_vizinho());
-    
-    
-//    for (int y = 0; y < sampleImage->h; y++) {
-//        for (int x = 0; x < sampleImage->w; x++) {
-//
-//        }
-//    }
-//
-//
-//
-//    for (int y = 0; y < sampleImage->h; y++) {
-//        for (int x = 0; x < sampleImage->w; x++) {
-//            Uint32 foregroundPixel = SDL_GetPixel(preSynthesisImageSurface, x, y);
-//
-//            SDL_Color foregroundColor;
-//            SDL_GetRGB(foregroundPixel, preSynthesisImageSurface->format, &foregroundColor.r, &foregroundColor.g, &foregroundColor.b);
-//
-//            SDL_Color sampleColor;
-//            SDL_GetRGB(foregroundPixel, preSynthesisImageSurface->format, &foregroundColor.r, &foregroundColor.g, &foregroundColor.b);
-//
-//            float value = isSimilarColor(foregroundColor, foregroundColor);
-//
-//
-//
-            
-            
-//
-//            if () {
-//                Uint32 backgroundPixel = SDL_GetPixel(preSynthesisImageSurface, x, y);
-//                SDL_SetPixel(sampleImage, x, y, backgroundPixel);
-//            } else {
-//                SDL_SetPixel(sampleImage, x, y, foregroundPixel);
-//            }
-//        }
-//    }
-    
-    
-    Image * newImage = new Image(renderer, sampleImage, 200, 150);
-    return newImage;
-    
-}
-
-int main(int argc, char* argv[]) {
-    static const int HEIGHT = 800;
-    static const int WIDTH = 600;
-    if (SDL_Init(SDL_INIT_VIDEO) < 0) {
-        SDL_LogError(SDL_LOG_CATEGORY_APPLICATION, "Falha ao inicializar o SDL: %s", SDL_GetError());
-        return 1;
-    }
-
-    if (TTF_Init() < 0) {
-        SDL_LogError(SDL_LOG_CATEGORY_APPLICATION, "Falha ao inicializar o SDL_ttf: %s", TTF_GetError());
-        SDL_Quit();
-        return 1;
-    }
-
-
-    SDL_Window* window = SDL_CreateWindow("Sintese de Textura", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, HEIGHT, WIDTH, SDL_WINDOW_SHOWN);
-    SDL_Renderer* renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
-    TTF_Font* font = TTF_OpenFont("/Users/fabriciovo/Developer/GitHub/cpp-synthesizing-natural-textures/cpp-synthesizing-natural-textures/arial.ttf", 24);
-
-    if (!window || !renderer || !font) {
-        SDL_LogError(SDL_LOG_CATEGORY_APPLICATION, "Falha ao criar janela, renderer ou carregar a fonte: %s", SDL_GetError());
-        TTF_Quit();
-        SDL_Quit();
-        return 1;
-    }
-
-    //Title
-    Text text(renderer, font, "Sintese de Textura", { 255, 255, 255, 255 }, WIDTH / 2, 20);
-    
-    //Image Titles
-    Text textImagem(renderer, font, "Imagem", { 255, 255, 255, 255 }, 90, HEIGHT / 2 - 30);
-    Text textTextura(renderer, font, "Textura", { 255, 255, 255, 255 }, WIDTH / 2, HEIGHT / 2 - 30);
-    Text textResult(renderer, font, "Resultado", { 255, 255, 255, 255 }, 510, HEIGHT / 2 - 30);
-    
-    //Images
-    Image * imageT = new Image(renderer, "/Users/fabriciovo/Developer/GitHub/cpp-synthesizing-natural-textures/cpp-synthesizing-natural-textures/t.png", 200, 150);
-    Image * imageI = new Image(renderer, "/Users/fabriciovo/Developer/GitHub/cpp-synthesizing-natural-textures/cpp-synthesizing-natural-textures/i.png", 200, 150);
-    
-    // Obter as superfícies das imagens
-    SDL_Surface* sampleSurface = imageI->getSurface();
-    SDL_Surface* preSynthesisSurface = imageT->getSurface();
-
-    // Sintetizar as texturas
-    Image* resultImage = synthesizeTextures(sampleSurface, preSynthesisSurface, renderer);
-
-    bool quit = false;
-    SDL_Event event;
-    while (!quit) {
-        while (SDL_PollEvent(&event)) {
-            if (event.type == SDL_QUIT) {
-                quit = true;
-            }
+    arqE >> transp;
+    Image* img = new Image(height, width);
+    for (int i = height - 1; i >= 0; i--)
+    {
+        for (int j = 0; j < width; j++)
+        {
+            arqE >> r;
+            arqE >> g;
+            arqE >> b;
+            img->setPixel(r, g, b, j, i);
         }
-
-        SDL_RenderClear(renderer);
-
-        text.render();
-        textImagem.render();
-        textTextura.render();
-        textResult.render();
-        
-        imageI->render(90, HEIGHT / 2);
-        imageT->render(WIDTH / 2, HEIGHT / 2);
-        resultImage->render(510, HEIGHT / 2);
-        SDL_RenderPresent(renderer);
     }
+    arqE.close();
+    return img;
+}
 
-    TTF_CloseFont(font);
-    SDL_DestroyRenderer(renderer);
-    SDL_DestroyWindow(window);
-    TTF_Quit();
-    SDL_Quit();
+void save(Image* image, std::string name)
+{
+    int temp, r, g, b;
+    std::ofstream arqS;
+    arqS.open(name + ".ppm");
+    arqS << "P3" << std::endl;
+    arqS << image->getWidth();
+    arqS << " ";
+    arqS << image->getHeight();
+    arqS << std::endl;
+    arqS << 255 << std::endl;
+    for (int i = image->getHeight() - 1; i >= 0; i--)
+    {
+        for (int j = 0; j < image->getWidth(); j++)
+        {
+            temp = image->getPixel(j, i);
+            r = temp >> 16 & 255;
+            g = temp >> 8 & 255;
+            b = temp & 255;
+            arqS << r << " ";
+            arqS << g << " ";
+            arqS << b << "\n";
+        }
+    }
+    arqS.close();
+}
 
+double dist(int c0, int c1) {
+    int r1 = (c0 >> 16) & 0xff;
+    int g1 = (c0 >> 8) & 0xff;
+    int b1 = c0 & 0xff;
+
+    int r2 = (c1 >> 16) & 0xff;
+    int g2 = (c1 >> 8) & 0xff;
+    int b2 = c1 & 0xff;
+
+    int r = r1 - r2;
+    int g = g1 - g2;
+    int b = b1 - b2;
+
+    double ret = sqrt(r * r + g * g + b * b);
+    return ret;
+}
+
+int neighbor(Image* s, int sx, int sy, int x, int y, int fW, int fH) {
+    int w = s->getWidth();
+    int h = s->getHeight();
+    int imageX = (sx + x + w) % w;
+    int imageY = (sy + y + h) % h;
+    int cor = s->getPixel(imageX, imageY);
+    return cor;
+}
+
+int main()
+{
+    Image* sample = readImage("sample32");
+    Image* result = readImage("preResult64");
+
+
+    int s = 0, r = 0;
+    int fW = 11;
+    int fH = 11;
+    int n2 = 11 / 2;
+    int px = 0, py = 0;
+    for (int ry = 0; ry < result->getHeight(); ry++) {
+        for (int rx = 0; rx < result->getWidth(); rx++) {
+            double dmin = 999999;
+            for (int sy = 0; sy < sample->getHeight(); sy++) {
+                for (int sx = 0; sx < sample->getWidth(); sx++) {
+                    double d = 0;
+                    for (int y = -n2; y < n2; y++) {
+                        for (int x = -n2; x < n2; x++) {
+                            s = neighbor(sample, sx, sy, x, y, fW, fH);
+                            r = neighbor(result, rx, ry, x, y, fW, fH);
+                            d += dist(r, s);
+                        }
+                    }
+                    if (d < dmin) {
+                        px = sx;
+                        py = sy;
+                        dmin = d;
+                    }
+                }
+            }
+            result->setPixelP(sample->getPixel(px, py), rx, ry);
+        }
+        int per = ry * 100 / result->getHeight();
+        std::cout << per << " %" << std::endl;
+    }
+    save(result, "output");
     return 0;
 }

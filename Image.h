@@ -1,27 +1,26 @@
 #ifndef IMAGE_H
 #define IMAGE_H
 
-#include <SDL2/SDL.h>
-#include <SDL2/SDL_image.h>
+#include <cmath>
 #include <string>
+#include <vector>
 
 class Image {
 public:
-    Image(SDL_Renderer* renderer, const std::string& imagePath, int width, int height);
-    Image(SDL_Renderer* renderer, SDL_Surface* surface, int width, int height);
-    ~Image();
-    void render(int x, int y);
-    SDL_Surface * getSurface() const;
-
-    int getWidth();
+    Image();
+    Image(int h, int w);
     int getHeight();
-private:
-    SDL_Renderer* renderer;
-    SDL_Texture* texture;
-    SDL_Surface* surface;
+    int getWidth();
+    void setPixelP(int rgb, int x, int y);
+    void setPixel(int r, int g, int b, int x, int y);
+    int getPixel(int x, int y);
+    int* getPixels();
+    void setPixels(int* p_pixel);
+    int getPixelEffect(int a);
+    void setPixelEffect(int a, int rgb);
 
-    
+private:
+    int* pixels;
     int width, height;
 };
 #endif /* IMAGE_H */
-

@@ -1,54 +1,48 @@
 #include "Image.h"
 
-Image::Image(SDL_Renderer* renderer, const std::string& imagePath, int width, int height)
-        : renderer(renderer), texture(nullptr), width(width), height(height) {
-        // Carregar a imagem
-        SDL_Surface* imageSurface = IMG_Load(imagePath.c_str());
-        if (!imageSurface) {
-            SDL_LogError(SDL_LOG_CATEGORY_APPLICATION, "Falha ao carregar a imagem: %s", IMG_GetError());
-            return;
-        }
-
-        // Criar uma textura a partir da superfície da imagem
-        texture = SDL_CreateTextureFromSurface(renderer, imageSurface);
-        this->surface = imageSurface;
-        if (!texture) {
-            SDL_LogError(SDL_LOG_CATEGORY_APPLICATION, "Falha ao criar a textura da imagem: %s", SDL_GetError());
-            SDL_FreeSurface(imageSurface);
-            return;
-        }
-
-        
-    }
-
-Image::Image(SDL_Renderer* renderer, SDL_Surface* surface, int width, int height)
-        : renderer(renderer), width(width), height(height)
-    {
-        // Crie a textura a partir da superfície usando o renderer fornecido
-        texture = SDL_CreateTextureFromSurface(renderer, surface);
-        // Verifique se a criação da textura foi bem-sucedida
-    }
-
-Image::~Image() {
-        if (texture) {
-            SDL_DestroyTexture(texture);
-            texture = nullptr;
-        }
-    }
-
-SDL_Surface* Image::getSurface() const {
-    return surface;
+Image::Image()
+{
 }
 
-    void Image::render(int x, int y) {
-        SDL_Rect destRect = { x, y, width, height };
-        SDL_RenderCopy(renderer, texture, nullptr, &destRect);
-    }
-
-int Image::getWidth() {
-    return this->width;
+Image::Image(int h, int w) {
+    height = h;
+    width = w;
+    pixels = new int[width * height];
 }
 
 int Image::getHeight() {
-    return this->height;
+    return height;
+}
+
+int Image::getWidth() {
+    return width;
+}
+
+void Image::setPixelP(int rgb, int x, int y) {
+    pixels[x + y * width] = rgb;
+}
+
+void Image::setPixel(int r, int g, int b, int x, int y) {
+    int rgb = (r << 16) | (g << 8) | b;
+    setPixelP(rgb, x, y);
+}
+
+int Image::getPixel(int x, int y) {
+    return pixels[x + y * width];
+}
+
+int* Image::getPixels() {
+    return pixels;
+}
+
+void Image::setPixels(int* p_pixel) {
+    pixels = p_pixel;
+}
+
+int Image::getPixelEffect(int a) {
+    return pixels[a];
+}
+
+void Image::setPixelEffect(int a, int rgb) {
+    pixels[a] = rgb;
 }

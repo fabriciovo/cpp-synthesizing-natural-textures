@@ -8,12 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		AB8FB5772A35159600439422 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = AB8FB5762A35159600439422 /* main.cpp */; };
-		ABB112D92A37EE180038DEEC /* Text.cpp in Sources */ = {isa = PBXBuildFile; fileRef = ABB112D72A37EE180038DEEC /* Text.cpp */; };
 		ABB112DC2A37F7810038DEEC /* Image.cpp in Sources */ = {isa = PBXBuildFile; fileRef = ABB112DA2A37F7810038DEEC /* Image.cpp */; };
-		ABD8D3822A37D1EB00B22BDF /* libSDL2_ttf-2.0.0.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = ABD8D3812A37D1EB00B22BDF /* libSDL2_ttf-2.0.0.dylib */; };
-		ABD8D3832A37D1EB00B22BDF /* libSDL2_ttf-2.0.0.dylib in Embed Libraries */ = {isa = PBXBuildFile; fileRef = ABD8D3812A37D1EB00B22BDF /* libSDL2_ttf-2.0.0.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
-		ABDAA41A2A3416FB007EBBA0 /* libSDL2-2.0.0.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = ABDAA4192A3416FB007EBBA0 /* libSDL2-2.0.0.dylib */; };
-		ABDAA41C2A341E07007EBBA0 /* libSDL2_image-2.0.0.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = ABDAA41B2A341E07007EBBA0 /* libSDL2_image-2.0.0.dylib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -32,7 +27,6 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				ABD8D3832A37D1EB00B22BDF /* libSDL2_ttf-2.0.0.dylib in Embed Libraries */,
 			);
 			name = "Embed Libraries";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -42,16 +36,8 @@
 /* Begin PBXFileReference section */
 		AB6E02832A33A2CD00747E8A /* cpp-synthesizing-natural-textures */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = "cpp-synthesizing-natural-textures"; sourceTree = BUILT_PRODUCTS_DIR; };
 		AB8FB5762A35159600439422 /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
-		ABB112D72A37EE180038DEEC /* Text.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Text.cpp; sourceTree = "<group>"; };
-		ABB112D82A37EE180038DEEC /* Text.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Text.h; sourceTree = "<group>"; };
 		ABB112DA2A37F7810038DEEC /* Image.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Image.cpp; sourceTree = "<group>"; };
 		ABB112DB2A37F7810038DEEC /* Image.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Image.h; sourceTree = "<group>"; };
-		ABD8D3812A37D1EB00B22BDF /* libSDL2_ttf-2.0.0.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libSDL2_ttf-2.0.0.dylib"; path = "../../../../../opt/homebrew/Cellar/sdl2_ttf/2.20.2/lib/libSDL2_ttf-2.0.0.dylib"; sourceTree = "<group>"; };
-		ABD8D3852A37D67D00B22BDF /* arial.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = arial.ttf; sourceTree = "<group>"; };
-		ABDAA4192A3416FB007EBBA0 /* libSDL2-2.0.0.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libSDL2-2.0.0.dylib"; path = "../../../../../opt/homebrew/Cellar/sdl2/2.26.5/lib/libSDL2-2.0.0.dylib"; sourceTree = "<group>"; };
-		ABDAA41B2A341E07007EBBA0 /* libSDL2_image-2.0.0.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libSDL2_image-2.0.0.dylib"; path = "../../../../../opt/homebrew/Cellar/sdl2_image/2.6.3_1/lib/libSDL2_image-2.0.0.dylib"; sourceTree = "<group>"; };
-		ABDAA41F2A3425AE007EBBA0 /* Base */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Base; path = Base.lproj/t.png; sourceTree = "<group>"; };
-		ABDAA4212A3425BC007EBBA0 /* Base */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Base; path = Base.lproj/i.png; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -59,9 +45,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				ABD8D3822A37D1EB00B22BDF /* libSDL2_ttf-2.0.0.dylib in Frameworks */,
-				ABDAA41C2A341E07007EBBA0 /* libSDL2_image-2.0.0.dylib in Frameworks */,
-				ABDAA41A2A3416FB007EBBA0 /* libSDL2-2.0.0.dylib in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -73,8 +56,6 @@
 			children = (
 				ABB112DA2A37F7810038DEEC /* Image.cpp */,
 				ABB112DB2A37F7810038DEEC /* Image.h */,
-				ABB112D72A37EE180038DEEC /* Text.cpp */,
-				ABB112D82A37EE180038DEEC /* Text.h */,
 				AB6E02852A33A2CD00747E8A /* cpp-synthesizing-natural-textures */,
 				AB6E02842A33A2CD00747E8A /* Products */,
 				ABDAA4182A3416FB007EBBA0 /* Frameworks */,
@@ -92,9 +73,6 @@
 		AB6E02852A33A2CD00747E8A /* cpp-synthesizing-natural-textures */ = {
 			isa = PBXGroup;
 			children = (
-				ABD8D3852A37D67D00B22BDF /* arial.ttf */,
-				ABDAA4222A3425BC007EBBA0 /* i.png */,
-				ABDAA4202A3425AE007EBBA0 /* t.png */,
 				AB8FB5762A35159600439422 /* main.cpp */,
 			);
 			path = "cpp-synthesizing-natural-textures";
@@ -103,9 +81,6 @@
 		ABDAA4182A3416FB007EBBA0 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				ABD8D3812A37D1EB00B22BDF /* libSDL2_ttf-2.0.0.dylib */,
-				ABDAA41B2A341E07007EBBA0 /* libSDL2_image-2.0.0.dylib */,
-				ABDAA4192A3416FB007EBBA0 /* libSDL2-2.0.0.dylib */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -169,31 +144,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				ABB112DC2A37F7810038DEEC /* Image.cpp in Sources */,
-				ABB112D92A37EE180038DEEC /* Text.cpp in Sources */,
 				AB8FB5772A35159600439422 /* main.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
-
-/* Begin PBXVariantGroup section */
-		ABDAA4202A3425AE007EBBA0 /* t.png */ = {
-			isa = PBXVariantGroup;
-			children = (
-				ABDAA41F2A3425AE007EBBA0 /* Base */,
-			);
-			name = t.png;
-			sourceTree = "<group>";
-		};
-		ABDAA4222A3425BC007EBBA0 /* i.png */ = {
-			isa = PBXVariantGroup;
-			children = (
-				ABDAA4212A3425BC007EBBA0 /* Base */,
-			);
-			name = i.png;
-			sourceTree = "<group>";
-		};
-/* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
 		AB6E02882A33A2CD00747E8A /* Debug */ = {
